@@ -69,9 +69,10 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                         fontSize: 14,
                       ),
                     ),
-                    const HorizontalSpace(10),
+                    const HorizontalSpace(7),
                     Expanded(
-                      child: GestureDetector(
+                      child: TextButton(
+                        onPressed: () {},
                         child: const Text(
                           'Forget Password',
                           style: TextStyle(

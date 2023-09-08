@@ -84,7 +84,10 @@ class _SignupViewBodyState extends State<SignupViewBody> {
                     ),
                   ),
                   Expanded(
-                    child: GestureDetector(
+                    child: TextButton(
+                      onPressed: () {
+
+                      },
                       child: const Text(
                         'Terms and Condition',
                         style: TextStyle(
