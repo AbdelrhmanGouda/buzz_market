@@ -18,80 +18,104 @@ class LoginViewBody extends StatefulWidget {
 
 class _LoginViewBodyState extends State<LoginViewBody> {
   bool isChecked = false;
+  var formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(30),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const TitleText(text: 'Welcome Back'),
-              const VerticalSpace(1),
-              const SubTitleText(
-                  text:
-                      'Log in to access your personalized real estate experience'),
-              const VerticalSpace(1),
-              const LabelText(text: "Name"),
-              const VerticalSpace(.3),
-              const CustomGeneralLabel(hint: "Enter your Name",textInputType: TextInputType.name,),
-              const VerticalSpace(.7),
-              const LabelText(text: "Email"),
-              const VerticalSpace(.3),
-              const CustomGeneralLabel(hint: "Enter your Email",textInputType: TextInputType.emailAddress),
-              Row(
-                children: [
-                  Checkbox(
-                    shape: const CircleBorder(),
-                    value: isChecked,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        isChecked = value!;
-                      });
-                    },
-                  ),
-                  const Text('Remember me',
-                    style: TextStyle(
-                      fontSize: 14,
+          child: Form(
+            key: formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const TitleText(text: 'Welcome Back'),
+                const VerticalSpace(1),
+                const SubTitleText(
+                    text:
+                        'Log in to access your personalized real estate experience'),
+                const VerticalSpace(1),
+                const LabelText(text: "Name"),
+                const VerticalSpace(.3),
+                CustomGeneralLabel(
+                  hint: "Enter your Name",
+                  textInputType: TextInputType.name,
+                  validator: 'Name',
+                ),
+                const VerticalSpace(.7),
+                const LabelText(text: "Email"),
+                const VerticalSpace(.3),
+                CustomGeneralLabel(
+                  hint: "Enter your Email",
+                  textInputType: TextInputType.emailAddress,
+                  validator: 'Email',
+                ),
+                Row(
+                  children: [
+                    Checkbox(
+                      shape: const CircleBorder(),
+                      value: isChecked,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          isChecked = value!;
+                        });
+                      },
                     ),
-                  ),
-                  const HorizontalSpace(10),
-                  Expanded(
-                    child: GestureDetector(
-                      child:const Text(
-                        'Forget Password',
-                        style: TextStyle(
-                          color: mainColor,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
+                    const Text(
+                      'Remember me',
+                      style: TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                    const HorizontalSpace(10),
+                    Expanded(
+                      child: GestureDetector(
+                        child: const Text(
+                          'Forget Password',
+                          style: TextStyle(
+                            color: mainColor,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const VerticalSpace(.5),
-              CustomGeneralButtons(text: "Continue", onTap: () {}),
-              const VerticalSpace(1.3),
-              const OrDivider(),
-              const VerticalSpace(1.3),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SocialIcon(text: 'assets/images/facebook.png', onTap: () {}),
-                  SocialIcon(text: 'assets/images/google.png', onTap: () {}),
-                  SocialIcon(text: 'assets/images/apple.png', onTap: () {}),
-                ],
-              ),
-              const VerticalSpace(3),
-               AlreadyHaveAnAccountCheck(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SignupView()));
-                },
-              )
-            ],
+                  ],
+                ),
+                const VerticalSpace(.5),
+                CustomGeneralButtons(
+                    text: "Continue",
+                    onTap: () {
+                      setState(() {
+                        formKey.currentState!.validate();
+                      });
+                    }),
+                const VerticalSpace(1.3),
+                const OrDivider(),
+                const VerticalSpace(1.3),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SocialIcon(
+                        text: 'assets/images/facebook.png', onTap: () {}),
+                    SocialIcon(text: 'assets/images/google.png', onTap: () {}),
+                    SocialIcon(text: 'assets/images/apple.png', onTap: () {}),
+                  ],
+                ),
+                const VerticalSpace(3),
+                AlreadyHaveAnAccountCheck(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SignupView()));
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),

@@ -3,53 +3,45 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CustomGeneralLabel extends StatelessWidget {
-  const CustomGeneralLabel(
-      {super.key, required this.hint, required this.textInputType});
-  final String? hint;
-  final TextInputType? textInputType;
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      keyboardType: textInputType,
-      decoration: InputDecoration(
-        hintStyle: const TextStyle(
-          color: hintColor,
-        ),
-        hintText: hint,
-        filled: true,
-        enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15.0),
-            borderSide: const BorderSide(
-              width: 0,
-              color: labelColor,
-            )),
-        focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15.0),
-            borderSide: const BorderSide(
-              width: 1.5,
-              color: mainColor,
-            )),
-        fillColor: labelColor,
-      ),
-    );
-  }
-}
+  CustomGeneralLabel({
+    super.key,
+    required this.hint,
+    required this.textInputType,
+    this.prefixIcon,
+    this.suffixIcon,
+    this.isObscure,
+    this.suffixPressed,
+    this.textController,
+    required this.validator
+  });
 
-class PasswordLabel extends StatelessWidget {
-  const PasswordLabel(
-      {super.key, required this.hint, required this.textInputType,required this.prefixIcon,required this.suffixIcon});
   final String? hint;
-  final Icon? prefixIcon;
-  final Icon? suffixIcon;
+  IconData? prefixIcon;
+  IconData? suffixIcon;
+  bool? isObscure = false;
   final TextInputType? textInputType;
+  final TextEditingController? textController;
+  VoidCallback? suffixPressed;
+  var validator;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: textController,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return '${validator} must not be empty';
+        } else {
+          return null;
+        }
+      },
       keyboardType: textInputType,
-      obscureText: true,
+      obscureText: isObscure != null ? isObscure! : false,
       decoration: InputDecoration(
-        prefixIcon: prefixIcon,
-        suffixIcon: suffixIcon,
+        prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
+        suffixIcon: suffixIcon != null
+            ? IconButton(onPressed: suffixPressed, icon: Icon(suffixIcon))
+            : null,
         hintStyle: const TextStyle(
           color: hintColor,
         ),
